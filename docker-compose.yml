@@ -6,7 +6,7 @@ services:
     restart: always
     ports:
       # Change the number before : to the port the web interface should be accessible on
-      - '5000:80'
+      - '5002:80'
       # Change the number before : to the port the SMTP server should be accessible on
       - '587:587'
       # Change the number before : to the port the IMAP server should be accessible on
@@ -14,7 +14,6 @@ services:
     volumes:
       # This is where smtp4dev stores the database..
         - smtp4dev-data:/smtp4dev
-        # - /${USERPROFILE}/.aspnet/https:/https:ro
     environment:
       # Uncomment to customise these settings
       # This is not a complete list of the available settings.
@@ -32,7 +31,7 @@ services:
       #- ServerOptions__LockSettings=true
 
       #Specifies the path where the database will be stored relative to APPDATA env var on Windows or XDG_CONFIG_HOME on non-Windows. Specify "" to use an in memory database.
-      #- ServerOptions__Database=database.db
+      - ServerOptions__Database=database.db
 
       #Specifies the number of messages to keep
       - ServerOptions__NumberOfMessagesToKeep=100
@@ -44,7 +43,6 @@ services:
       - ServerOptions__TlsMode=StartTls
 
       #Specifies the TLS certificate to use if TLS is enabled/requested. Specify "" to use an auto-generated self-signed certificate (then see console output on first startup)
-      # - ServerOptions__TlsCertificate=https/ToDoApp.pfx
 
       #Sets the name of the SMTP server that will be used to relay messages or "" if messages should not be relayed
       #- RelayOptions__SmtpServer=
@@ -66,6 +64,8 @@ services:
 
       #Specifies the port the IMAP server will listen on - allows standard email clients to view/retrieve messages
       - ServerOptions__ImapPort=143
+      - ServerOptions__AuthenticationRequired=true
+      - ServerOptions__SecureConnectionRequired=true
 
 volumes:
   smtp4dev-data:
